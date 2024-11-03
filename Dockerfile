@@ -1,0 +1,40 @@
+# Use OpenJDK 17 as the base image
+FROM openjdk:17
+
+# Expose the application port
+EXPOSE 8081
+
+# Set environment variables for Spring Boot
+ENV SERVER_PORT=8081
+ENV SPRING_PROFILES_ACTIVE=TestBootstrap
+ENV SPRING_DATASOURCE_URL=jdbc:h2:~/DebtAPI/db;AUTO_SERVER=true;
+ENV SPRING_DATASOURCE_DRIVERCLASSNAME=org.h2.Driver
+ENV SPRING_DATASOURCE_USERNAME=root
+ENV SPRING_DATASOURCE_PASSWORD=root
+ENV SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
+ENV SPRING_JPA_GENERATE_DDL=true
+ENV SPRING_JPA_HIBERNATE_DDL_AUTO=update
+ENV SPRING_H2_CONSOLE_ENABLED=true
+
+# JWT Key configurations
+ENV JWT_PUBLIC_KEY=classpath:rsa.public.key
+ENV JWT_PRIVATE_KEY=classpath:rsa.private.key
+
+# Swagger and logging configurations
+ENV SPRINGDOC_API_DOCS_ENABLED=true
+ENV SPRINGDOC_API_DOCS_PATH=/api-docs
+ENV SPRINGDOC_SWAGGER_UI_PATH=/swagger-ui
+ENV LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
+
+# Multipart upload settings
+ENV SPRING_SERVLET_MULTIPART_ENABLED=true
+ENV SPRING_SERVLET_MULTIPART_FILE_SIZE_THRESHOLD=2KB
+ENV SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE=200MB
+ENV SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE=215MB
+ENV FILE_UPLOAD_DIR=~/DebtAPI/Images
+
+# Copy the JAR file into the container
+COPY DebtAPI-Alpha1.0.jar app.jar
+
+# Define the entry point for the container
+ENTRYPOINT ["java", "-jar", "/app.jar"]
