@@ -46,6 +46,6 @@ public class ApiConfig {
 	public OpenAPI openApi() {
 		return new OpenAPI().info(new Info().title("StorageAPI").description("API to manage the inventory, and to aid in shopping").version("v1.0")
 				.contact(new Contact().name("Eduardo Pereira").email("eduardocastropereira@gmail.com"))
-				.license(new License().name("Personal Project").url("https://github.com/EduardoPereira411")));
+				.license(new License().name("Personal Project").url("https://github.com/EduardoPereira411"))); //TESTING SSH KEYS
 	}
 }
